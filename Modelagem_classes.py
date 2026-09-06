@@ -1,52 +1,52 @@
-produtos = []
-cliente = []
-pedido = {
-    'cliente': {},
-    'itens': []
+products = []
+client = []
+order = {
+    'client': {},
+    'items': []
 }
 
-# -------- CADASTRO PRODUTO -------- #
-nome = input("Digite o nome do produto: ")
-preco = float(input('Digite o valor do produto: '))
-def cadastrar_produto(produtos, nome, preco):
-    produtos.append({'nome': nome, 'preco': preco})
+# -------- REGISTER PRODUCT -------- #
+name = input("Digite o nome do produto: ")    #'Digit the product name'
+price = float(input('Digite o valor do produto: '))    # 'Digit the product value'
+def register_product(products, name, price):
+    products.append({'name': name, 'price': price})
 
-cadastrar_produto(produtos, nome, preco)
+register_product(products, name, price)
 # print(produtos)
 
 
-#--------- BUSCA PRODUTO ----------#
-def buscar_produto(produtos, nome):
-    for produto in produtos:
-        if produto['nome']  == nome:
-            return produto
-produto_encontrado = buscar_produto(produtos, nome)
-print(produto_encontrado)
+#--------- SEARCH PRODUCT ----------#
+def search_products(products, name):
+    for product in products:
+        if product['name']  == name:
+            return product
+product_found = search_products(products, name)
+print(product_found)
 
 
-# --------CADASTRO CLIENTE-------- #
-nome_cliente = input('Digite o nome do cliente: ' )
-def cadastrar_cliente(cliente, nome_cliente):
-    cliente.append({'nome': nome_cliente})
-cadastrar_cliente(cliente, nome_cliente)
+# -------- REGISTER CUSTOMER -------- #
+client_name = input('Digite o nome do cliente: ' )   #'Digit the client name'
+def register_customer(client, client_name):
+    client.append({'name': client_name})
+register_customer(client, client_name)
 
 
-#------- BUSCAR CLIENTE--------
-def buscar_cliente(clientes, nome_cliente):
-    for cliente in clientes:
-        if cliente['nome'] == nome_cliente:
-            return cliente
-cliente_encontrado = buscar_cliente(cliente, nome_cliente)
-print(cliente_encontrado)
-pedido['cliente'] = cliente_encontrado
+#------- SEARCH CLIENT --------
+def search_client(clients, client_name):
+    for client in clients:
+        if client['name'] == client_name:
+            return client
+client_found = search_client(client, client_name)
+print(client_found)
+order['client'] = client_found
 
 
-#--------- ADICIONAR ITEM----------#
-quantidade = int(input('Digite a quantidade do item: '))
-def adicionar_item(pedido, produto, quantidade):
-    pedido['itens'].append({'produto': produto, 'quantidade': quantidade})
-    # pedido['cliente'] = cliente_encontrado
+#--------- ADD ITEM----------#
+quantity = int(input('Digite a quantidade do item: '))         #'Digit the quantity item'
+def add_item(order, product, quantity):
+    order['items'].append({'product': product, 'quantity': quantity})
 
-adicionar_item(pedido, produto_encontrado, quantidade)
-print(cliente)
-print(pedido)
+
+add_item(order, product_found, quantity)
+print(client)
+print(order)
