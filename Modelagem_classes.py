@@ -2,7 +2,8 @@ products = []
 client = []
 order = {
     'client': {},
-    'items': []
+    'items': [],
+    'boleto': {}
 }
 
 # -------- REGISTER PRODUCT -------- #
@@ -52,7 +53,7 @@ add_item(order, product_found, quantity)
 print(order)
 
 
-
+# ------- GENERATE SUMMARY -------- #
 def generate_summary(order):
     print(order['client']['name'])
     total = 0
@@ -63,3 +64,15 @@ def generate_summary(order):
     print('O total do pedido é: ', total)     # The total order is  
 
 generate_summary(order)
+
+
+boleto = input('Fazer boleto? Sim ou Não: ').upper()
+if boleto.startswith('S'):
+    print('Fazer boleto')
+    answer = True
+else:
+    print('Não fazer boleto')
+    answer = False
+order['boleto'] = answer
+print(answer)
+print(order)
