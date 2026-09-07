@@ -6,8 +6,8 @@ order = {
 }
 
 # -------- REGISTER PRODUCT -------- #
-name = input("Digite o nome do produto: ")    #'Digit the product name'
-price = float(input('Digite o valor do produto: '))    # 'Digit the product value'
+name = input("Digite o nome do produto: ")    #'Type the product name'
+price = float(input('Digite o valor do produto: '))    # 'Type the product value'
 def register_product(products, name, price):
     products.append({'name': name, 'price': price})
 
@@ -16,19 +16,19 @@ register_product(products, name, price)
 
 
 #--------- SEARCH PRODUCT ----------#
-def search_products(products, name):
+def search_product(products, name):
     for product in products:
         if product['name']  == name:
             return product
-product_found = search_products(products, name)
+product_found = search_product(products, name)
 print(product_found)
 
 
-# -------- REGISTER CUSTOMER -------- #
-client_name = input('Digite o nome do cliente: ' )   #'Digit the client name'
-def register_customer(client, client_name):
+# -------- REGISTER CLIENT -------- #
+client_name = input('Digite o nome do cliente: ' )   #'Type the client name'
+def register_client(client, client_name):
     client.append({'name': client_name})
-register_customer(client, client_name)
+register_client(client, client_name)
 
 
 #------- SEARCH CLIENT --------
@@ -42,11 +42,24 @@ order['client'] = client_found
 
 
 #--------- ADD ITEM----------#
-quantity = int(input('Digite a quantidade do item: '))         #'Digit the quantity item'
+quantity = int(input('Digite a quantidade do item: '))         #'Type the item quantity'
 def add_item(order, product, quantity):
     order['items'].append({'product': product, 'quantity': quantity})
 
 
 add_item(order, product_found, quantity)
-print(client)
+# print(client)
 print(order)
+
+
+
+def generate_summary(order):
+    print(order['client']['name'])
+    total = 0
+    for item in order['items']:
+        subtotal = item['product']['price'] * item['quantity']
+        print(item['product']['name'], 'x', item['quantity'], '=', subtotal )
+        total += subtotal
+    print('O total do pedido é: ', total)     # The total order is  
+
+generate_summary(order)
