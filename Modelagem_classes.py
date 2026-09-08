@@ -1,4 +1,11 @@
-products = []
+import json
+
+
+try:
+    with open('products.json', 'r') as arquivo:
+        products = json.load(arquivo)
+except FileNotFoundError:
+    products = []
 client = []
 order = {
     'client': {},
@@ -91,3 +98,6 @@ else:
 order['boleto'] = answer
 
 print(order)
+
+with open('products.json', 'w') as arquivo:
+    json.dump(products, arquivo)
