@@ -6,13 +6,25 @@ try:
         products = json.load(arquivo)
 except FileNotFoundError:
     products = []
-client = []
+
+
+try: 
+    with open('client.json', 'r') as arquivo:
+        client = json.load(arquivo)
+except FileNotFoundError:
+    client = []
+
+try:
+    with open('orders.json', 'r') as arquivo:
+        orders = json.load(arquivo)
+except FileNotFoundError:
+    orders = []
+
 order = {
     'client': {},
     'items': [],
     'boleto': {},
 }
-
 
 # -------- REGISTER PRODUCT -------- #
 def register_product(products, name, price):
@@ -97,7 +109,12 @@ else:
     answer = False
 order['boleto'] = answer
 
+orders.append(order)
 print(order)
 
 with open('products.json', 'w') as arquivo:
     json.dump(products, arquivo)
+with open('client.json', 'w') as arquivo:
+    json.dump(client, arquivo)
+with open('orders.json', 'w') as arquivo:
+    json.dump(orders, arquivo)
