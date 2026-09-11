@@ -26,6 +26,7 @@ order = {
     'boleto': {},
 }
 
+
 # -------- REGISTER PRODUCT -------- #
 def register_product(products, name, price):
     products.append({'name': name, 'price': price})
@@ -67,54 +68,81 @@ def generate_summary(order):
 
 
 while True:
-    name = input("Digite o produto: ")
-    price = float(input("Digite o preço: "))
-    register_product(products, name, price)
+    print('Escolha uma ação que queira realizar')
+    print('1 Cadastrar produto')
+    print('2 Cadastrar cliente')
+    print('3 Realizar pedido')
+    print('4 Ver últimos pedidos')
+    print('5 Sair')
+    print()
+    select = input()
+    if select == '1':
 
-    other_product = input("Gostaria de adicionar mais um produto? ").upper()
-    if not other_product.startswith('S'):
-        break
+        while True:
+            name = input("Digite o produto: ")
+            price = float(input("Digite o preço: "))
+            register_product(products, name, price)
 
+            other_product = input("Gostaria de adicionar mais um produto? ").upper()
+            if not other_product.startswith('S'):
+                break
+        with open('products.json', 'w') as arquivo:
+            json.dump(products, arquivo)
 
-client_name = input('Digite o nome do cliente: ')
-register_client(client, client_name)
-client_found = search_client(client, client_name)
-order['client'] = client_found
+    elif select == '2':      
+        client_name = input('Digite o nome do cliente: ')
+        register_client(client, client_name)
+        with open('client.json', 'w') as arquivo:
+            json.dump(client, arquivo)
 
+    elif select == '3':
+        client_name = input('Digite o nome do cliente: ')
+        client_found = search_client(client, client_name)
+        order['client'] = client_found
+        if client_found is None:
+            print("Cliente não existe, por favor adicione em registrar clientes.")
+            continue
+        while True:
+            more_something = input('Gostaria de selecionar um produto? ').upper()
+            if more_something.startswith('N'):
+                break
+            else:
+                product = input('Digite o nome do produto: ')
+            product_found = search_product(products, product)
+            if product_found is None:
+                print("Produto não existe")
+                continue
+            quantity = int(input("Digite a quantidade: "))
+            add_item(order, product_found, quantity)
+        print()
+        print('Resumo da compra:')
+        generate_summary(order)
+        # print(order)
+        print()
+        print('Fazer boleto?')
+        print("Sim / Não")
+        boleto = input("Fazer boleto? ").upper()
+        if boleto.startswith("S"):
+            answer = True
+        else:
+            answer = False
+        order['boleto'] = answer
+        print()
+        orders.append(order)
 
-while True:
-    more_something = input('Gostaria de adicionar um produto? ').upper()
-    if more_something.startswith('N'):
+        with open('orders.json', 'w') as arquivo:
+            json.dump(orders, arquivo)
+
+    elif select == '4':
+        print('Ver últimos pedidos')
+    elif select == '5':
+        print('Sair')
         break
     else:
-        product = input('Digite o nome do produto: ')
-    product_found = search_product(products, product)
-    if product_found is None:
-        print("Produto não existe")
-        continue
-    quantity = int(input("Digite a quantidade: "))
-    add_item(order, product_found, quantity)
+        print('Digite uma opção válida')
 
-print()
-print('Resumo da compra:')
-generate_summary(order)
 
-print()
-print('Fazer boleto?')
-print("Sim / Não")
-boleto = input("Fazer boleto? ").upper()
-if boleto.startswith("S"):
-    answer = True
-else:
-    answer = False
-order['boleto'] = answer
 
-orders.append(order)
-print(order)
 
-with open('products.json', 'w') as arquivo:
-    json.dump(products, arquivo)
-with open('client.json', 'w') as arquivo:
-    json.dump(client, arquivo)
-with open('orders.json', 'w') as arquivo:
-    json.dump(orders, arquivo)
+
+
