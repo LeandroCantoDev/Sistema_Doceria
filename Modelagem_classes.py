@@ -40,14 +40,14 @@ def search_product(products, name):
 
 
 # -------- REGISTER CLIENT -------- #
-def register_client(client, client_name):
-    client.append({'name': client_name})
+def register_client(client, client_name, phone):
+    client.append({'name': client_name, 'phone': phone})
 
 
 #------- SEARCH CLIENT --------
-def search_client(clients, client_name):
+def search_client(clients, name):
     for client in clients:
-        if client['name'] == client_name:
+        if client['name'] == name:
             return client
 
 
@@ -80,9 +80,13 @@ while True:
 
         while True:
             name = input("Digite o produto: ")
-            price = float(input("Digite o preço: "))
-            register_product(products, name, price)
-
+            product_found = search_product(products, name)
+            if product_found is None:
+                price = float(input("Digite o preço: "))
+                register_product(products, name, price)
+            else:
+                print('Produto já existe ')
+            
             other_product = input("Gostaria de adicionar mais um produto? ").upper()
             if not other_product.startswith('S'):
                 break
@@ -102,6 +106,8 @@ while True:
         if client_found is None:
             print("Cliente não existe, por favor adicione em registrar clientes.")
             continue
+        for product in products:
+            print(product['name'], product['price'])
         while True:
             more_something = input('Gostaria de selecionar um produto? ').upper()
             if more_something.startswith('N'):
