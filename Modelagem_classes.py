@@ -68,6 +68,7 @@ def generate_summary(order):
 
 
 while True:
+    print()
     print('Escolha uma ação que queira realizar')
     print('1 Cadastrar produto')
     print('2 Cadastrar cliente')
@@ -76,13 +77,23 @@ while True:
     print('5 Sair')
     print()
     select = input()
+
     if select == '1':
 
         while True:
             name = input("Digite o produto: ")
+            if name == '':
+                print("Digite o produto corretamente")  
+                continue      
             product_found = search_product(products, name)
             if product_found is None:
-                price = float(input("Digite o preço: "))
+                while True:
+                    try:
+                        price = float(input("Digite o preço: "))
+                        break
+                    except ValueError:
+                        print('Digite o preço com números.')
+                        continue
                 register_product(products, name, price)
             else:
                 print('Produto já existe ')
@@ -93,11 +104,16 @@ while True:
         with open('products.json', 'w') as arquivo:
             json.dump(products, arquivo)
 
-    elif select == '2':      
-        client_name = input('Digite o nome do cliente: ')
-        register_client(client, client_name)
-        with open('client.json', 'w') as arquivo:
-            json.dump(client, arquivo)
+    elif select == '2':    
+        while True:  
+            client_name = input('Digite o nome do cliente: ')
+            if client_name == '':
+                print("Digite o nome corretamente")  
+                continue 
+            register_client(client, client_name)
+            with open('client.json', 'w') as arquivo:
+                json.dump(client, arquivo)
+            break
 
     elif select == '3':
         client_name = input('Digite o nome do cliente: ')
@@ -106,8 +122,10 @@ while True:
         if client_found is None:
             print("Cliente não existe, por favor adicione em registrar clientes.")
             continue
+        print()
         for product in products:
             print(product['name'], product['price'])
+        print()
         while True:
             more_something = input('Gostaria de selecionar um produto? ').upper()
             if more_something.startswith('N'):
@@ -118,12 +136,17 @@ while True:
             if product_found is None:
                 print("Produto não existe")
                 continue
-            quantity = int(input("Digite a quantidade: "))
+            while True:
+                try:
+                    quantity = int(input("Digite a quantidade: "))
+                    break
+                except ValueError:
+                    print('Digite a quantidade em números.')
+                    continue
             add_item(order, product_found, quantity)
         print()
         print('Resumo da compra:')
         generate_summary(order)
-        # print(order)
         print()
         print('Fazer boleto?')
         print("Sim / Não")
@@ -148,9 +171,3 @@ while True:
         break
     else:
         print('Digite uma opção válida')
-
-
-
-
-
-
