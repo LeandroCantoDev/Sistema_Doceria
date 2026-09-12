@@ -40,8 +40,8 @@ def search_product(products, name):
 
 
 # -------- REGISTER CLIENT -------- #
-def register_client(client, client_name, phone):
-    client.append({'name': client_name, 'phone': phone})
+def register_client(client, client_name):
+    client.append({'name': client_name})
 
 
 #------- SEARCH CLIENT --------
@@ -140,7 +140,9 @@ while True:
             json.dump(orders, arquivo)
 
     elif select == '4':
-        print('Ver últimos pedidos')
+        for x in orders[-10:]:
+            generate_summary(x)
+            print()
     elif select == '5':
         print('Sair')
         break
